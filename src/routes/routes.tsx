@@ -6,7 +6,8 @@ export const RootRoutes = () => {
   return (
     <Routes>
         <Route path='/*' element={<Navigate to='/login'/>}></Route>
-        <Route path='/login' element={<LoginPage/>}></Route>
+        <Route path='/login' element={<LoginPage page='signin'/>}></Route>
+        <Route path='/register' element={<LoginPage page='register'/>}></Route>
     </Routes>
   )
 }
