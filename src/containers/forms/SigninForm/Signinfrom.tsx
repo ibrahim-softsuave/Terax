@@ -4,6 +4,7 @@ import "./Signinform.scss";
 import { InputField } from "../../../components/InputComponents/inputField";
 import * as YUP from 'yup'
 import { Error } from "../../../components/ErrorComponent/error";
+import { AuthSignin } from "../../../service/authServices";
 
 
 export const SigninForm:React.FC<{}> = () => {
@@ -16,7 +17,7 @@ export const SigninForm:React.FC<{}> = () => {
     Password:''
   }
   const onSubmit =(values:Signin)=>{
-    console.log(values)
+    
   }
   const validationSchema=YUP.object({
     Username:YUP.string().required('Username is required'),
