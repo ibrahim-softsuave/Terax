@@ -8,7 +8,7 @@ interface  InputFieldProps {
     placeholder:string;    
     }
 export const InputField :React.FC<InputFieldProps> = (props) => {
-    const {type,id,name,placeholder}=props
+    const {type,id,name,placeholder,}=props
   return (
     <div className="form-input">
       <Field

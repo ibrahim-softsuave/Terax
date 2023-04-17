@@ -4,10 +4,16 @@ import "./Signinform.scss";
 import { InputField } from "../../../components/InputComponents/inputField";
 import * as YUP from 'yup'
 import { Error } from "../../../components/ErrorComponent/error";
-import { AuthSignin } from "../../../service/authServices";
+import { authSignin } from "../../../service/authServices";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 
 export const SigninForm:React.FC<{}> = () => {
+  const [serverErrors,SetServerErrors]=useState('')
+  const handleClick=()=>{
+    SetServerErrors('')
+  }
   interface Signin {
     Username: string;
     Password: string;
@@ -16,7 +22,23 @@ export const SigninForm:React.FC<{}> = () => {
     Username:'',
     Password:''
   }
-  const onSubmit =(values:Signin)=>{
+
+  const onSubmit =async(values:Signin)=>{
+    const response=await authSignin(values)
+      if (response.data==='Signin Successfully'){
+        <Link to='/home'></Link>
+      }
+      else{ 
+        if (response.data==='Server Error'){
+        SetServerErrors('Server Error')
+          }
+        else if(response.data==='Username is doesnot exist'){
+          SetServerErrors('Username is doesnot exist')
+        }
+        else if(response.data==='Password is mismatched'){
+          SetServerErrors('Password is mismatched')
+        }
+    }
     
   }
   const validationSchema=YUP.object({
@@ -32,6 +54,7 @@ export const SigninForm:React.FC<{}> = () => {
     >
       <Form  className="form">
         <p className="form-header">Sigin In</p>
+        {serverErrors?<div className="server-error"><p>{serverErrors}</p><p className="close" onClick={handleClick}>x</p></div>:''}
         <div className="form-main">
           <div className="form-input-container">
             <label htmlFor="username">Username</label>
@@ -56,7 +79,7 @@ export const SigninForm:React.FC<{}> = () => {
         </div>
         <div className="form-footer">
           <div className="form-input">
-            <button>Sign In</button>
+            <button type="submit">Sign In</button>
           </div>
         </div>
       </Form>
